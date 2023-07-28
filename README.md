@@ -1,0 +1,2 @@
+# juju
+Multipurpose discord bot.
