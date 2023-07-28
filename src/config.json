@@ -1,0 +1,33 @@
+{
+  "client_id": "BOT_USER_ID_HERE",
+  "token": "BOT_TOKEN_HERE",
+  "prefix": ["!"],
+  "public": false,
+
+  "ownerID": "1017527341003571210",
+  "staffIDs": ["123", "123"],
+  "mainServerID": "1132737786143846463",
+
+  "logCommands": false,
+  "logGuildJoinLeave": false,
+
+  "firstShardID": 0,
+  "lastShardID": 0,
+  "maxShards": 1,
+  "getAllUsers": false,
+
+  "warningEmoji": "⚠️",
+  "successEmoji": "✅",
+  "errorEmoji": "❌",
+  "loadingEmoji": "🔁",
+
+  "ownerCooldownBypass": false,
+  "staffCooldownBypass": false,
+  "workCooldown": 15,
+  "workMinCash": 50,
+  "workMaxCash": 150,
+  "dailyMinCash": 500,
+  "dailyMaxCash": 1250,
+  "minGamble": 1,
+  "maxGamble": 100000
+}
