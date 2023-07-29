@@ -38,9 +38,8 @@ export default {
       const embed = {
         description: `${interaction.member?.mention}: Please provide a number between 1 and 1000.`,
         color: warningColor,
-        flags: 64,
       };
-      interaction.createMessage({ embed });
+      interaction.createMessage({ embed, flags: 64 });
       return;
     }
 
@@ -49,9 +48,8 @@ export default {
       const embed = {
         description: `${interaction.member?.mention}: No messages found to delete.`,
         color: errorColor,
-        flags: 64,
       };
-      interaction.createMessage({ embed });
+      interaction.createMessage({ embed, flags: 64 });
       return;
     }
 
@@ -62,8 +60,7 @@ export default {
     const embed = {
       description: `${interaction.member?.mention}: Deleted **${deletedCount}** messages in this channel.`,
       color: defaultColor,
-      flags: 64,
     };
-    interaction.createMessage({ embed });
+    interaction.createMessage({ embed, flags: 64 });
   },
 };
