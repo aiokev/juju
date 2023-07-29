@@ -28,9 +28,6 @@ export default {
       color: defaultColor,
     };
     interaction.createMessage({ embed });
-    if (config.logCommands) {
-      console.log(`${interaction.member?.username} executed /${interaction.data.name}.`);
-    }
   },
 };
 

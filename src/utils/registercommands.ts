@@ -6,6 +6,9 @@ import leaderboardCommand from '../commands/leaderboard';
 import sourceCommand from '../commands/source';
 import gambleCommand from '../commands/gamble';
 import dailyCommand from '../commands/daily';
+import setlogchannel from '../commands/setlogchannel';
+import removelogchannel from '../commands/removelogchannel';
+import clean from '../commands/clean';
 
 // command exports
 export const balanceCmd = {
@@ -43,4 +46,21 @@ export const gambleCmd = {
 export const dailyCmd = {
     name: dailyCommand.name,
     description: dailyCommand.description,
+}
+
+export const setlogchannelCmd = {
+    name: setlogchannel.name,
+    description: setlogchannel.description,
+    options: setlogchannel.options,
+}
+
+export const removelogchannelCmd = {
+    name: removelogchannel.name,
+    description: removelogchannel.description,
+}
+
+export const cleanCmd = {
+    name: clean.name,
+    description: clean.description,
+    options: clean.options,
 }

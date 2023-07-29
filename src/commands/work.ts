@@ -37,9 +37,6 @@ export default {
       } else {
         writeCooldownData(cooldownData);
       }
-      if (config.logCommands) {
-        console.log(`${interaction.member?.username} executed /${interaction.data.name}.`)
-      }
     } else {
       const remainingCooldown = cooldownData[userId] + WORK_COOLDOWN - now;
       const remainingMinutes = Math.ceil(remainingCooldown / (60 * 1000));
@@ -49,9 +46,6 @@ export default {
         color: defaultColor,
       };
       interaction.createMessage({ embed });
-      if (config.logCommands) {
-        console.log(`${interaction.member?.username} executed /${interaction.data.name}.`)
-      }
     }
   },
 };

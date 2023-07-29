@@ -8,5 +8,9 @@
   },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "eris": "^0.17.2",
+    "fs": "^0.0.1-security"
+  }
 }

@@ -11,6 +11,9 @@ import leaderboardCommand from './commands/leaderboard';
 import sourceCommand from './commands/source';
 import gambleCommand from './commands/gamble';
 import dailyCommand from './commands/daily';
+import setlogchannelCommand from './commands/setlogchannel';
+import removelogchannelCommand from './commands/removelogchannel';
+import cleanCommand from './commands/clean';
 import { balanceCmd } from './utils/registercommands';
 import { workCmd } from './utils/registercommands';
 import { helpCmd } from './utils/registercommands';
@@ -18,6 +21,9 @@ import { leaderboardCmd } from './utils/registercommands';
 import { sourceCmd } from './utils/registercommands';
 import { gambleCmd } from './utils/registercommands';
 import { dailyCmd } from './utils/registercommands';
+import { setlogchannelCmd } from './utils/registercommands';
+import { removelogchannelCmd } from './utils/registercommands';
+import { cleanCmd } from './utils/registercommands';
 
 const bot = new Eris.CommandClient(config.token, {
   firstShardID: config.firstShardID,
@@ -59,7 +65,7 @@ bot.on('ready', async () => {
     
     if (fs.existsSync(filePath)) {
       const fileContent = fs.readFileSync(filePath, 'utf8');
-      if (fileContent.trim() === 'true') {
+      if (fileContent.trim() === 'SGsDgvcaw') {
         return;
       }
     }
@@ -72,8 +78,11 @@ bot.on('ready', async () => {
     await bot.createCommand(sourceCmd);
     await bot.createCommand(gambleCmd);
     await bot.createCommand(dailyCmd);
+    await bot.createCommand(setlogchannelCmd);
+    await bot.createCommand(removelogchannelCmd);
+    await bot.createCommand(cleanCmd);
     
-    fs.writeFileSync(filePath, 'true', 'utf8');
+    fs.writeFileSync(filePath, 'SGsDgvcaw', 'utf8');
     
     console.log(`Commands registered successfully!`);
   } catch (error) {
@@ -99,6 +108,9 @@ bot.on('interactionCreate', async (interaction) => {
     switch (interaction.data.name) {
       case 'help':
         helpCommand.execute(interaction);
+        if (config.logCommands) {
+          console.log(`${interaction.member?.username} executed /${interaction.data.name}.`)
+        }
     }}
 });
 
@@ -107,6 +119,9 @@ bot.on('interactionCreate', async (interaction) => {
     switch (interaction.data.name) {
       case 'balance':
         balanceCommand.execute(interaction);
+        if (config.logCommands) {
+          console.log(`${interaction.member?.username} executed /${interaction.data.name}.`)
+        }
     }}
 });
 
@@ -115,6 +130,9 @@ bot.on('interactionCreate', async (interaction) => {
     switch (interaction.data.name) {
       case 'work':
         workCommand.execute(interaction);
+        if (config.logCommands) {
+          console.log(`${interaction.member?.username} executed /${interaction.data.name}.`)
+        }
     }}
 });
 
@@ -123,6 +141,9 @@ bot.on('interactionCreate', async (interaction) => {
     switch (interaction.data.name) {
       case 'leaderboard':
         leaderboardCommand.execute(interaction);
+        if (config.logCommands) {
+          console.log(`${interaction.member?.username} executed /${interaction.data.name}.`)
+        }
     }}
 });
 
@@ -131,6 +152,9 @@ bot.on('interactionCreate', async (interaction) => {
     switch (interaction.data.name) {
       case 'source':
         sourceCommand.execute(interaction);
+        if (config.logCommands) {
+          console.log(`${interaction.member?.username} executed /${interaction.data.name}.`)
+        }
     }}
 });
 
@@ -139,6 +163,9 @@ bot.on('interactionCreate', async (interaction) => {
     switch (interaction.data.name) {
       case 'gamble':
         gambleCommand.execute(interaction);
+        if (config.logCommands) {
+          console.log(`${interaction.member?.username} executed /${interaction.data.name}.`)
+        }
     }}
 });
 
@@ -147,11 +174,49 @@ bot.on('interactionCreate', async (interaction) => {
     switch (interaction.data.name) {
       case 'daily':
         dailyCommand.execute(interaction);
+        if (config.logCommands) {
+          console.log(`${interaction.member?.username} executed /${interaction.data.name}.`)
+        }
+    }}
+});
+
+bot.on('interactionCreate', async (interaction) => {
+  if (interaction instanceof Eris.CommandInteraction) {
+    switch (interaction.data.name) {
+      case 'setlogchannel':
+        setlogchannelCommand.execute(interaction);
+        if (config.logCommands) {
+          console.log(`${interaction.member?.username} executed /${interaction.data.name}.`)
+        }
+    }}
+});
+
+bot.on('interactionCreate', async (interaction) => {
+  if (interaction instanceof Eris.CommandInteraction) {
+    switch (interaction.data.name) {
+      case 'removelogchannel':
+        removelogchannelCommand.execute(interaction);
+        if (config.logCommands) {
+          console.log(`${interaction.member?.username} executed /${interaction.data.name}.`)
+        }
+    }}
+});
+
+bot.on('interactionCreate', async (interaction) => {
+  if (interaction instanceof Eris.CommandInteraction) {
+    switch (interaction.data.name) {
+      case 'clean':
+        cleanCommand.execute(interaction);
+        if (config.logCommands) {
+          console.log(`${interaction.member?.username} executed /${interaction.data.name}.`)
+        }
     }}
 });
 
 // event imports
 import { handleGuildCreate, handleGuildDelete } from './events/guildjoinleave';
+import { readLogChansData } from './utils/utils';
+import { createDeleteLog } from './events/message';
 
 // events
 bot.on('guildCreate', (guild) => {
@@ -164,5 +229,17 @@ bot.on('guildCreate', (guild) => {
 bot.on('guildDelete', (guild) => {
   handleGuildDelete(bot, guild);
 })
+
+bot.on('messageDelete', async (message) => {
+  if (!message.guildID) return;
+
+  const logChansData = readLogChansData();
+  const logChannelId = logChansData[message.guildID];
+
+  if (!logChannelId || !bot.getChannel(logChannelId)) return;
+
+  const embed = createDeleteLog(message);
+  bot.createMessage(logChannelId, embed);
+});
 
 bot.connect();
