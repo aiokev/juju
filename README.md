@@ -18,4 +18,4 @@ A multipurpose bot that runs on Discord.
 8. /removelogchannel
 9. /source
 10. /clean <amount>
-~ more soon
+### more soon
