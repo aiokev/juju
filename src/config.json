@@ -10,6 +10,7 @@
 
   "logCommands": false,
   "logGuildJoinLeave": false,
+  "invisCmdResponses": false,
 
   "firstShardID": 0,
   "lastShardID": 0,
