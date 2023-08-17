@@ -8,14 +8,14 @@ A multipurpose bot that runs on Discord.
 4. Run start.bat
 
 # Commands
-1. /balance <user>
+1. /balance (user)
 2. /work
 3. /daily
-4. /gamble <amount>
+4. /gamble (amount)
 5. /leaderboard
 6. /help
-7. /setlogchannel <channel>
+7. /setlogchannel (channel)
 8. /removelogchannel
 9. /source
-10. /clean <amount>
+10. /clean (amount)
 ### more soon
