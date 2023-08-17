@@ -1,12 +1,7 @@
 import { CommandInteraction } from 'eris';
 import * as fs from 'fs';
 import config from '../config.json';
-
-// color config
-import { defaultColor } from '../bot';
-import { warningColor } from '../bot';
-import { successColor } from '../bot';
-import { errorColor } from '../bot';
+import { defaultColor, errorColor, successColor, warningColor } from '../utils/colors';
 
 const WORK_COOLDOWN = config.workCooldown * 60 * 1000 / 2;
 const MIN_CASH = config.workMinCash;
@@ -31,7 +26,7 @@ export default {
         description: `${interaction.member?.mention}: You worked and earned **${cashEarned}** cash!`,
         color: defaultColor,
       };
-      interaction.createMessage({ embed });
+      interaction.createMessage({ embed, flags: config.invisCmdResponses? 64 : 0 });
       if (config.ownerID === interaction.member?.id && config.ownerCooldownBypass || config.staffIDs.includes(interaction.member?.id || "unknown") && config.staffCooldownBypass) {
         return
       } else {
@@ -45,7 +40,7 @@ export default {
         description: `${interaction.member?.mention}: You need to wait **${remainingMinutes}** minutes before working again.`,
         color: defaultColor,
       };
-      interaction.createMessage({ embed });
+      interaction.createMessage({ embed, flags: config.invisCmdResponses? 64 : 0 });
     }
   },
 };

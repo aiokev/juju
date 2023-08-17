@@ -1,12 +1,7 @@
 import { CommandInteraction } from 'eris';
 import * as fs from 'fs';
 import config from '../config.json';
-
-// color config
-import { defaultColor } from '../bot';
-import { warningColor } from '../bot';
-import { successColor } from '../bot';
-import { errorColor } from '../bot';
+import { defaultColor, errorColor, successColor, warningColor } from '../utils/colors';
 
 export default {
   name: 'leaderboard',
@@ -19,7 +14,7 @@ export default {
       .slice(0, 10);
 
     const leaderboardText = sortedBalances
-      .map(([userId, balance], index) => `**${index + 1}** <@${userId}> - ${balance.cash}`)
+      .map(([userId, balance], index) => `\`${index + 1}\` <@${userId}> - ${balance.cash}`)
       .join('\n') || "N/A";
 
     const embed = {
@@ -27,7 +22,7 @@ export default {
       description: leaderboardText,
       color: defaultColor,
     };
-    interaction.createMessage({ embed });
+    interaction.createMessage({ embed, flags: config.invisCmdResponses? 64 : 0 });
   },
 };
 

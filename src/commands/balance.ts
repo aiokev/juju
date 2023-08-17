@@ -1,12 +1,7 @@
 import { CommandInteraction } from 'eris';
 import * as fs from 'fs';
 import config from '../config.json';
-
-// color config
-import { defaultColor } from '../bot';
-import { warningColor } from '../bot';
-import { successColor } from '../bot';
-import { errorColor } from '../bot';
+import { defaultColor, errorColor, successColor, warningColor } from '../utils/colors';
 
 export default {
   name: 'balance',
@@ -39,7 +34,7 @@ export default {
       description: `${interaction.member?.mention}: You have a wallet balance of **${userBalance.cash}**!`,
       color: defaultColor,
     };
-    interaction.createMessage({ embed });
+    interaction.createMessage({ embed, flags: config.invisCmdResponses? 64 : 0 });
   }
 };
 

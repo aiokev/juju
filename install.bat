@@ -1,4 +1,4 @@
 @echo off
 
 echo Installing...
-call npm install eris fs
+call npm install eris

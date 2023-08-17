@@ -1,10 +1,6 @@
 import { CommandInteraction } from 'eris';
-
-// color config
-import { defaultColor } from '../bot';
-import { warningColor } from '../bot';
-import { successColor } from '../bot';
-import { errorColor } from '../bot';
+import config from '../config.json';
+import { defaultColor, errorColor, successColor, warningColor } from '../utils/colors';
 
 export default {
   name: 'clean',
@@ -23,7 +19,7 @@ export default {
         description: `${interaction.member?.mention}: You do not have the required permissions to use this command.`,
         color: warningColor,
       };
-      interaction.createMessage({ embed });
+      interaction.createMessage({ embed, flags: config.invisCmdResponses? 64 : 0 });
       return;
     }
 
@@ -43,7 +39,7 @@ export default {
       return;
     }
 
-    const messages = await interaction.channel?.getMessages(amount); // Fetch messages to be deleted (+1 to include the command message)
+    const messages = await interaction.channel?.getMessages(amount);
     if (!messages || messages.length === 0) {
       const embed = {
         description: `${interaction.member?.mention}: No messages found to delete.`,

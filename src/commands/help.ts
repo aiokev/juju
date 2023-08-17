@@ -1,8 +1,6 @@
 import { CommandInteraction } from 'eris';
 import config from '../config.json';
-
-// color config
-import { defaultColor } from '../bot';
+import { defaultColor, errorColor, successColor, warningColor } from '../utils/colors';
 
 export default {
   name: 'help',
@@ -13,6 +11,6 @@ export default {
         description: `JuJu is an open-source multipurpose discord bot. For more in depth help and information you should visit https://discord.gg/frkqsQEZ2W.`,
         color: defaultColor,
     }
-    interaction.createMessage({ embed });
+    interaction.createMessage({ embed, flags: config.invisCmdResponses? 64 : 0 });
   }
 };

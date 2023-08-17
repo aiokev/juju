@@ -9,6 +9,7 @@ import dailyCommand from '../commands/daily';
 import setlogchannel from '../commands/setlogchannel';
 import removelogchannel from '../commands/removelogchannel';
 import clean from '../commands/clean';
+import channelstats from '../commands/channelstats';
 
 // command exports
 export const balanceCmd = {
@@ -63,4 +64,10 @@ export const cleanCmd = {
     name: clean.name,
     description: clean.description,
     options: clean.options,
+}
+
+export const channelstatsCmd = {
+    name: channelstats.name,
+    description: channelstats.description,
+    options: channelstats.options,
 }

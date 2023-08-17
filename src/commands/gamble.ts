@@ -1,13 +1,8 @@
 import { CommandInteraction } from 'eris';
 import * as fs from 'fs';
-import { getRandomNumber } from '../utils/utils';
+import { getRandomNumber } from '../utils/tools';
 import config from '../config.json'
-
-// color config
-import { defaultColor } from '../bot';
-import { warningColor } from '../bot';
-import { successColor } from '../bot';
-import { errorColor } from '../bot';
+import { defaultColor, errorColor, successColor, warningColor } from '../utils/colors';
 
 const MIN_GAMBLE_AMOUNT = config.minGamble;
 const MAX_GAMBLE_AMOUNT = config.maxGamble;
@@ -36,7 +31,7 @@ export default {
         description: `${interaction.member?.mention}: Please enter a valid gamble amount between **${MIN_GAMBLE_AMOUNT}** and **${MAX_GAMBLE_AMOUNT}** coins.`,
         color: warningColor,
       };
-      interaction.createMessage({ embed });
+      interaction.createMessage({ embed, flags: config.invisCmdResponses? 64 : 0 });
       return;
     }
 
@@ -53,7 +48,7 @@ export default {
         description: `${interaction.member?.mention}: You do not have enough coins to gamble this amount.`,
         color: errorColor,
       };
-      interaction.createMessage({ embed });
+      interaction.createMessage({ embed, flags: config.invisCmdResponses? 64 : 0 });
       return;
     }
 
@@ -64,14 +59,14 @@ export default {
         description: `${interaction.member?.mention}: Congratulations! You won **${amount}** coins in the gamble. You now have **${userBalance.cash}** coins.`,
         color: successColor,
       };
-      interaction.createMessage({ embed });
+      interaction.createMessage({ embed, flags: config.invisCmdResponses? 64 : 0 });
     } else {
       userBalance.cash -= amount;
       const embed = {
         description: `${interaction.member?.mention}: Sorry, you lost **${amount}** coins in the gamble. You now have **${userBalance.cash}** coins.`,
         color: errorColor,
       };
-      interaction.createMessage({ embed });
+      interaction.createMessage({ embed, flags: config.invisCmdResponses? 64 : 0 });
     }
 
     writeBalanceData(balanceData);

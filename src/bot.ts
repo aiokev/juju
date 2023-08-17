@@ -1,7 +1,8 @@
 // imports
 import * as Eris from 'eris';
 import config from '../src/config.json';
-import fs from 'fs';
+import * as fs from 'fs';
+import { defaultColor, errorColor, successColor, warningColor } from './utils/colors';
 
 // command imports
 import balanceCommand from './commands/balance';
@@ -14,16 +15,8 @@ import dailyCommand from './commands/daily';
 import setlogchannelCommand from './commands/setlogchannel';
 import removelogchannelCommand from './commands/removelogchannel';
 import cleanCommand from './commands/clean';
-import { balanceCmd } from './utils/registercommands';
-import { workCmd } from './utils/registercommands';
-import { helpCmd } from './utils/registercommands';
-import { leaderboardCmd } from './utils/registercommands';
-import { sourceCmd } from './utils/registercommands';
-import { gambleCmd } from './utils/registercommands';
-import { dailyCmd } from './utils/registercommands';
-import { setlogchannelCmd } from './utils/registercommands';
-import { removelogchannelCmd } from './utils/registercommands';
-import { cleanCmd } from './utils/registercommands';
+import channelstatsCommand from './commands/channelstats';
+import { balanceCmd, workCmd, helpCmd, leaderboardCmd, sourceCmd, gambleCmd, dailyCmd, setlogchannelCmd, removelogchannelCmd, cleanCmd, channelstatsCmd } from './utils/registercommands';
 
 const bot = new Eris.CommandClient(config.token, {
   firstShardID: config.firstShardID,
@@ -36,11 +29,6 @@ const bot = new Eris.CommandClient(config.token, {
 
 bot.setMaxListeners(25);
 bot.unregisterCommand(`help`);
-// embed colors config
-export const defaultColor = 0x7289DA;
-export const warningColor = 0xfaa61a;
-export const successColor = 0xa5eb78;
-export const errorColor = 0xff6465;
 
 bot.on('ready', () => {
   const botUser = `${bot.user.username}#${bot.user.discriminator}`
@@ -81,6 +69,7 @@ bot.on('ready', async () => {
     await bot.createCommand(setlogchannelCmd);
     await bot.createCommand(removelogchannelCmd);
     await bot.createCommand(cleanCmd);
+    await bot.createCommand(channelstatsCmd);
     
     fs.writeFileSync(filePath, 'SGsDgvcaw', 'utf8');
     
@@ -213,9 +202,20 @@ bot.on('interactionCreate', async (interaction) => {
     }}
 });
 
+bot.on('interactionCreate', async (interaction) => {
+  if (interaction instanceof Eris.CommandInteraction) {
+    switch (interaction.data.name) {
+      case 'channelstats':
+        channelstatsCommand.execute(interaction);
+        if (config.logCommands) {
+          console.log(`${interaction.member?.username} executed /${interaction.data.name}.`)
+        }
+    }}
+});
+
 // event imports
 import { handleGuildCreate, handleGuildDelete } from './events/guildjoinleave';
-import { readLogChansData } from './utils/utils';
+import { readLogChansData } from './utils/tools';
 import { createDeleteLog } from './events/message';
 
 // events
@@ -228,7 +228,7 @@ bot.on('guildCreate', (guild) => {
 
 bot.on('guildDelete', (guild) => {
   handleGuildDelete(bot, guild);
-})
+});
 
 bot.on('messageDelete', async (message) => {
   if (!message.guildID) return;

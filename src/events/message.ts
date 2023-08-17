@@ -1,10 +1,5 @@
 import { MessageContent, TextChannel } from 'eris';
-
-// color config
-import { defaultColor } from '../bot';
-import { warningColor } from '../bot';
-import { successColor } from '../bot';
-import { errorColor } from '../bot';
+import { defaultColor, errorColor, successColor, warningColor } from '../utils/colors';
 
 export function createDeleteLog(message: any): MessageContent {
   const embed = {

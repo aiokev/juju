@@ -1,9 +1,7 @@
 import { CommandInteraction } from 'eris';
 import * as fs from 'fs';
-
-// color config
-import { defaultColor } from '../bot';
-import { warningColor } from '../bot';
+import config from '../config.json';
+import { defaultColor, errorColor, successColor, warningColor } from '../utils/colors';
 
 interface LogChansData {
   [guildId: string]: string;
@@ -19,7 +17,7 @@ export default {
         description: `${interaction.member?.mention}: You do not have the required permissions to use this command.`,
         color: warningColor,
       };
-      interaction.createMessage({ embed });
+      interaction.createMessage({ embed, flags: config.invisCmdResponses? 64 : 0 });
       return;
     }
 
@@ -35,7 +33,7 @@ export default {
         description: `${interaction.member?.mention}: Logging channel is not set for this server.`,
         color: warningColor,
       };
-      interaction.createMessage({ embed });
+      interaction.createMessage({ embed, flags: config.invisCmdResponses? 64 : 0 });
       return;
     }
 
@@ -46,7 +44,7 @@ export default {
       description: `${interaction.member?.mention}: Logging channel has been removed for this server.`,
       color: defaultColor,
     };
-    interaction.createMessage({ embed });
+    interaction.createMessage({ embed, flags: config.invisCmdResponses? 64 : 0 });
   },
 };
 

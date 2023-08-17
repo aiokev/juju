@@ -10,7 +10,11 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "discord-fetch-all": "^3.0.2",
     "eris": "^0.17.2",
     "fs": "^0.0.1-security"
+  },
+  "devDependencies": {
+    "@types/node": "^20.4.5"
   }
 }
