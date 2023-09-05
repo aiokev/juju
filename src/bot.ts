@@ -16,7 +16,20 @@ import setlogchannelCommand from './commands/setlogchannel';
 import removelogchannelCommand from './commands/removelogchannel';
 import cleanCommand from './commands/clean';
 import channelstatsCommand from './commands/channelstats';
-import { balanceCmd, workCmd, helpCmd, leaderboardCmd, sourceCmd, gambleCmd, dailyCmd, setlogchannelCmd, removelogchannelCmd, cleanCmd, channelstatsCmd } from './utils/registercommands';
+
+import { 
+  balanceCmd,
+  workCmd,
+  helpCmd,
+  leaderboardCmd,
+  sourceCmd,
+  gambleCmd,
+  dailyCmd,
+  setlogchannelCmd,
+  removelogchannelCmd,
+  cleanCmd,
+  channelstatsCmd
+} from './utils/registercommands';
 
 const bot = new Eris.CommandClient(config.token, {
   firstShardID: config.firstShardID,
@@ -28,7 +41,11 @@ const bot = new Eris.CommandClient(config.token, {
 });
 
 bot.setMaxListeners(25);
-bot.unregisterCommand(`help`);
+bot.unregisterCommand('help');
+
+bot.on("shardReady", (id) => {
+  console.log(`Shard: ${id} ready!`)
+});
 
 bot.on('ready', () => {
   const botUser = `${bot.user.username}#${bot.user.discriminator}`
@@ -41,10 +58,6 @@ process.on('unhandledRejection', (err) => {
 
 bot.on("error", (err) => {
   console.error(err);
-});
-
-bot.on("shardReady", (id) => {
-  console.log(`Shard: ${id} ready!`)
 });
 
 bot.on('ready', async () => {
@@ -91,125 +104,46 @@ bot.on("ready", async () => {
 */
 
 // command handling
-// TODO: redo the command handling
 bot.on('interactionCreate', async (interaction) => {
   if (interaction instanceof Eris.CommandInteraction) {
+    if (config.logCommands) {
+      console.log(`${interaction.member?.username} executed /${interaction.data.name}.`)
+    }
     switch (interaction.data.name) {
       case 'help':
         helpCommand.execute(interaction);
-        if (config.logCommands) {
-          console.log(`${interaction.member?.username} executed /${interaction.data.name}.`)
-        }
-    }}
-});
-
-bot.on('interactionCreate', async (interaction) => {
-  if (interaction instanceof Eris.CommandInteraction) {
-    switch (interaction.data.name) {
       case 'balance':
-        balanceCommand.execute(interaction);
-        if (config.logCommands) {
-          console.log(`${interaction.member?.username} executed /${interaction.data.name}.`)
-        }
-    }}
-});
-
-bot.on('interactionCreate', async (interaction) => {
-  if (interaction instanceof Eris.CommandInteraction) {
-    switch (interaction.data.name) {
+        balanceCommand.execute(interaction)
+        break
       case 'work':
-        workCommand.execute(interaction);
-        if (config.logCommands) {
-          console.log(`${interaction.member?.username} executed /${interaction.data.name}.`)
-        }
-    }}
-});
-
-bot.on('interactionCreate', async (interaction) => {
-  if (interaction instanceof Eris.CommandInteraction) {
-    switch (interaction.data.name) {
+        workCommand.execute(interaction)
+        break
       case 'leaderboard':
-        leaderboardCommand.execute(interaction);
-        if (config.logCommands) {
-          console.log(`${interaction.member?.username} executed /${interaction.data.name}.`)
-        }
-    }}
-});
-
-bot.on('interactionCreate', async (interaction) => {
-  if (interaction instanceof Eris.CommandInteraction) {
-    switch (interaction.data.name) {
+        leaderboardCommand.execute(interaction)
+        break
       case 'source':
-        sourceCommand.execute(interaction);
-        if (config.logCommands) {
-          console.log(`${interaction.member?.username} executed /${interaction.data.name}.`)
-        }
-    }}
-});
-
-bot.on('interactionCreate', async (interaction) => {
-  if (interaction instanceof Eris.CommandInteraction) {
-    switch (interaction.data.name) {
+        sourceCommand.execute(interaction)
+        break
       case 'gamble':
-        gambleCommand.execute(interaction);
-        if (config.logCommands) {
-          console.log(`${interaction.member?.username} executed /${interaction.data.name}.`)
-        }
-    }}
-});
-
-bot.on('interactionCreate', async (interaction) => {
-  if (interaction instanceof Eris.CommandInteraction) {
-    switch (interaction.data.name) {
+        gambleCommand.execute(interaction)
+        break
       case 'daily':
-        dailyCommand.execute(interaction);
-        if (config.logCommands) {
-          console.log(`${interaction.member?.username} executed /${interaction.data.name}.`)
-        }
-    }}
-});
-
-bot.on('interactionCreate', async (interaction) => {
-  if (interaction instanceof Eris.CommandInteraction) {
-    switch (interaction.data.name) {
+        dailyCommand.execute(interaction)
+        break
       case 'setlogchannel':
-        setlogchannelCommand.execute(interaction);
-        if (config.logCommands) {
-          console.log(`${interaction.member?.username} executed /${interaction.data.name}.`)
-        }
-    }}
-});
-
-bot.on('interactionCreate', async (interaction) => {
-  if (interaction instanceof Eris.CommandInteraction) {
-    switch (interaction.data.name) {
+        setlogchannelCommand.execute(interaction)
+        break
       case 'removelogchannel':
-        removelogchannelCommand.execute(interaction);
-        if (config.logCommands) {
-          console.log(`${interaction.member?.username} executed /${interaction.data.name}.`)
-        }
-    }}
-});
-
-bot.on('interactionCreate', async (interaction) => {
-  if (interaction instanceof Eris.CommandInteraction) {
-    switch (interaction.data.name) {
+        removelogchannelCommand.execute(interaction)
+        break
       case 'clean':
-        cleanCommand.execute(interaction);
-        if (config.logCommands) {
-          console.log(`${interaction.member?.username} executed /${interaction.data.name}.`)
-        }
-    }}
-});
-
-bot.on('interactionCreate', async (interaction) => {
-  if (interaction instanceof Eris.CommandInteraction) {
-    switch (interaction.data.name) {
+        cleanCommand.execute(interaction)
+        break
       case 'channelstats':
-        channelstatsCommand.execute(interaction);
-        if (config.logCommands) {
-          console.log(`${interaction.member?.username} executed /${interaction.data.name}.`)
-        }
+        channelstatsCommand.execute(interaction)
+        break
+      default:
+        break
     }}
 });
 

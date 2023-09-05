@@ -20,6 +20,7 @@ export function createDeleteLog(message: any): MessageContent {
       {
         name: 'Content',
         value: message.content || 'Content unavailable (probably an embed)',
+        inline: false,
       },
     ],
   };
